@@ -1,6 +1,13 @@
 from htmlnode import LeafNode
 
 class TextNode:
+    text_type_text = "text"
+    text_type_bold = "bold"
+    text_type_italic = "italic"
+    text_type_code = "code"
+    text_type_link = "link"
+    text_type_image = "image"
+
     def __init__(self, text, text_type, url = None):
         self.text = text
         self.text_type = text_type
@@ -37,6 +44,6 @@ class TextNode:
             raise Exception("Not of the available text_types")
         
 
-trial_1 = TextNode(text="something", text_type="bold")
+    trial_1 = TextNode(text="something's ` gone ` here", text_type="bold")
 
-print(TextNode.text_node_to_html_node(trial_1))
+    print(trial_1.text_node_to_html_node(trial_1))
