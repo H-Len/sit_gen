@@ -1,83 +1,99 @@
 import unittest
 from inline_markdown import (
     split_nodes_delimiter,
+    split_nodes_image,
 )
 
 from textnode import (
-    TextNode,
-    text_type_text,
-    text_type_bold,
-    text_type_italic,
-    text_type_code,
+    TextNode
 )
 
 
 class TestInlineMarkdown(unittest.TestCase):
     def test_delim_bold(self):
-        node = TextNode("This is text with a **bolded** word", text_type_text)
-        new_nodes = split_nodes_delimiter([node], "**", text_type_bold)
+        node = TextNode("This is text with a **bolded** word", TextNode.text_type_text)
+        new_nodes = split_nodes_delimiter([node], "**", TextNode.text_type_bold)
         self.assertListEqual(
             [
-                TextNode("This is text with a ", text_type_text),
-                TextNode("bolded", text_type_bold),
-                TextNode(" word", text_type_text),
+                TextNode("This is text with a ", TextNode.text_type_text),
+                TextNode("bolded", TextNode.text_type_bold),
+                TextNode(" word", TextNode.text_type_text),
             ],
             new_nodes,
         )
 
     def test_delim_bold_double(self):
         node = TextNode(
-            "This is text with a **bolded** word and **another**", text_type_text
+            "This is text with a **bolded** word and **another**", TextNode.text_type_text
         )
-        new_nodes = split_nodes_delimiter([node], "**", text_type_bold)
+        new_nodes = split_nodes_delimiter([node], "**", TextNode.text_type_bold)
         self.assertListEqual(
             [
-                TextNode("This is text with a ", text_type_text),
-                TextNode("bolded", text_type_bold),
-                TextNode(" word and ", text_type_text),
-                TextNode("another", text_type_bold),
+                TextNode("This is text with a ", TextNode.text_type_text),
+                TextNode("bolded", TextNode.text_type_bold),
+                TextNode(" word and ", TextNode.text_type_text),
+                TextNode("another", TextNode.text_type_bold),
             ],
             new_nodes,
         )
 
     def test_delim_bold_multiword(self):
         node = TextNode(
-            "This is text with a **bolded word** and **another**", text_type_text
+            "This is text with a **bolded word** and **another**", TextNode.text_type_text
         )
-        new_nodes = split_nodes_delimiter([node], "**", text_type_bold)
+        new_nodes = split_nodes_delimiter([node], "**", TextNode.text_type_bold)
         self.assertListEqual(
             [
-                TextNode("This is text with a ", text_type_text),
-                TextNode("bolded word", text_type_bold),
-                TextNode(" and ", text_type_text),
-                TextNode("another", text_type_bold),
+                TextNode("This is text with a ", TextNode.text_type_text),
+                TextNode("bolded word", TextNode.text_type_bold),
+                TextNode(" and ", TextNode.text_type_text),
+                TextNode("another", TextNode.text_type_bold),
             ],
             new_nodes,
         )
 
     def test_delim_italic(self):
-        node = TextNode("This is text with an *italic* word", text_type_text)
-        new_nodes = split_nodes_delimiter([node], "*", text_type_italic)
+        node = TextNode("This is text with an *italic* word", TextNode.text_type_text)
+        new_nodes = split_nodes_delimiter([node], "*", TextNode.text_type_italic)
         self.assertListEqual(
             [
-                TextNode("This is text with an ", text_type_text),
-                TextNode("italic", text_type_italic),
-                TextNode(" word", text_type_text),
+                TextNode("This is text with an ", TextNode.text_type_text),
+                TextNode("italic", TextNode.text_type_italic),
+                TextNode(" word", TextNode.text_type_text),
             ],
             new_nodes,
         )
 
     def test_delim_code(self):
-        node = TextNode("This is text with a `code block` word", text_type_text)
-        new_nodes = split_nodes_delimiter([node], "`", text_type_code)
+        node = TextNode("This is text with a `code block` word", TextNode.text_type_text)
+        new_nodes = split_nodes_delimiter([node], "`", TextNode.text_type_code)
         self.assertListEqual(
             [
-                TextNode("This is text with a ", text_type_text),
-                TextNode("code block", text_type_code),
-                TextNode(" word", text_type_text),
+                TextNode("This is text with a ", TextNode.text_type_text),
+                TextNode("code block", TextNode.text_type_code),
+                TextNode(" word", TextNode.text_type_text),
             ],
             new_nodes,
         )
+
+    def test_img(self):
+        node = TextNode("This is text with an ![image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and another ![second image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/3elNhQu.png)",
+        TextNode.text_type_text,
+        )
+
+        new_nodes = split_nodes_image([node])
+
+        self.assertListEqual(
+            [
+                TextNode("This is text with an ", TextNode.text_type_text),
+                TextNode("image", TextNode.text_type_image, "https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png"),
+                TextNode(" and another ", TextNode.text_type_text),
+                TextNode(
+                    "second image", TextNode.text_type_image, "https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/3elNhQu.png"
+                ),
+            ]
+
+        , new_nodes)
 
 
 if __name__ == "__main__":

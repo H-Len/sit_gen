@@ -42,8 +42,3 @@ class TextNode:
             return LeafNode("img", '', props_src_alt)
         else:
             raise Exception("Not of the available text_types")
-        
-
-    trial_1 = TextNode(text="something's ` gone ` here", text_type="bold")
-
-    print(trial_1.text_node_to_html_node(trial_1))
