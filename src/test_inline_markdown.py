@@ -5,9 +5,10 @@ from inline_markdown import (
     split_nodes_link
 )
 
-from textnode import (
-    TextNode
-)
+import re
+from textnode import TextNode
+from htmlnode import HTMLNode
+
 
 
 class TestInlineMarkdown(unittest.TestCase):
@@ -104,14 +105,35 @@ class TestInlineMarkdown(unittest.TestCase):
         new_nodes = split_nodes_link([node])
         self.assertListEqual(
             [
-                TextNode("This is text with a ", text_type_text),
-                TextNode("link", text_type_link, "https://boot.dev"),
-                TextNode(" and ", text_type_text),
-                TextNode("another link", text_type_link, "https://blog.boot.dev"),
-                TextNode(" with text that follows", text_type_text),
+                TextNode("This is text with a ", TextNode.text_type_text),
+                TextNode("link", TextNode.text_type_link, "https://boot.dev"),
+                TextNode(" and ", TextNode.text_type_text),
+                TextNode("another link", TextNode.text_type_link, "https://blog.boot.dev"),
+                TextNode(" with text that follows", TextNode.text_type_text),
             ],
             new_nodes,
         )
+
+    # def test_text_to_TextNode(self):
+    #     sample_text = "This is **text** with an *italic* word and a `code block` and an ![image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and a [link](https://boot.dev)"
+
+    #     split_list = split_nodes_link([sample_text])
+
+    #     sample_TextNode_list = [
+    #         TextNode("This is ", TextNode.text_type_text),
+    #         TextNode("text", TextNode.text_type_bold),
+    #         TextNode(" with an ", TextNode.text_type_text),
+    #         TextNode("italic", TextNode.text_type_italic),
+    #         TextNode(" word and a ", TextNode.text_type_text),
+    #         TextNode("code block", TextNode.text_type_code),
+    #         TextNode(" and an ", TextNode.text_type_text),
+    #         TextNode("image", TextNode.text_type_image, "https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png"),
+    #         TextNode(" and a ", TextNode.text_type_text),
+    #         TextNode("link", TextNode.text_type_link, "https://boot.dev"),
+    #     ]
+
+    #     self.assertListEqual(split_list, sample_TextNode_list)
+
 
 if __name__ == "__main__":
     unittest.main()

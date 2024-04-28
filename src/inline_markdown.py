@@ -30,12 +30,15 @@ def split_nodes_image(old_nodes):
             new_nodes.append(old_node)
             continue
         extract_nodes = extract_markdown_images(old_node.text)
-        alt, url = extract_nodes[0]
-        sections = old_node.text.split(f"![{alt}]({url})", 1)
-        new_nodes.append(TextNode(sections[0], TextNode.text_type_text))
-        new_nodes.append(TextNode(alt, TextNode.text_type_image, url))
-        if sections[1] != "":
-            new_nodes.extend(split_nodes_image([TextNode(sections[1], TextNode.text_type_text)]))
+        if extract_nodes != []:
+            alt, url = extract_nodes[0]
+            sections = old_node.text.split(f"![{alt}]({url})", 1)
+            new_nodes.append(TextNode(sections[0], TextNode.text_type_text))
+            new_nodes.append(TextNode(alt, TextNode.text_type_image, url))
+            if sections[1] != "":
+                new_nodes.extend(split_nodes_image([TextNode(sections[1], TextNode.text_type_text)]))
+        else:
+            new_nodes.append(TextNode(old_node.text, TextNode.text_type_text))
     return new_nodes
 
 def split_nodes_link(old_nodes):
@@ -45,12 +48,15 @@ def split_nodes_link(old_nodes):
             new_nodes.append(old_node)
             continue
         extract_nodes = extract_markdown_links(old_node.text)
-        alt, url = extract_nodes[0]
-        sections = old_node.text.split(f"![{alt}]({url})", 1)
-        new_nodes.append(TextNode(sections[0], TextNode.text_type_text))
-        new_nodes.append(TextNode(alt, TextNode.text_type_link, url))
-        if sections[1] != "":
-            new_nodes.extend(split_nodes_image([TextNode(sections[1], TextNode.text_type_text)]))
+        if extract_nodes != []:
+            link_text, url = extract_nodes[0]
+            sections = old_node.text.split(f"[{link_text}]({url})", 1)
+            new_nodes.append(TextNode(sections[0], TextNode.text_type_text))
+            new_nodes.append(TextNode(link_text, TextNode.text_type_link, url))
+            if sections[1] != "":
+                new_nodes.extend(split_nodes_link([TextNode(sections[1], TextNode.text_type_text)]))
+        else:
+            new_nodes.append(TextNode(old_node.text, TextNode.text_type_text))
     return new_nodes
 
 
@@ -63,3 +69,5 @@ def extract_markdown_links(text):
     matches = re.findall(pattern, text)
     return matches
 
+def text_to_textnodes(text):
+    new_nodes = []
