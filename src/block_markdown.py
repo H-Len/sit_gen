@@ -1,15 +1,22 @@
 import re
 
-markdown_text = "This is **bolded** paragraph\n"\
-"\n"\
-"This is another paragraph with *italic* text and `code` here \n"\
-"This is the same paragraph on a new line \n"\
-"\n"\
-"* This is a list \n"\
-"* with items"
+markdown_text = '''This is **bolded** paragraph
 
-# print(markdown_text)
+This is another paragraph with *italic* text and `code` here
+This is the same paragraph on a new line
 
-def markdown_to_blocks(markdown):
-    blocks = re.split(r'\n+', markdown)
-    print(blocks)
+* This is a list
+* with items
+'''
+
+
+def markdown_to_blocks(markdown_text):
+    blocks = [] 
+    sections = markdown_text.split('\n\n')
+    for s in sections:
+        if s != '':
+            trim_s = s.strip()
+            blocks.append(trim_s)
+    return blocks
+
+markdown_to_blocks(markdown_text)
