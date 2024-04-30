@@ -20,14 +20,14 @@ def markdown_to_blocks(markdown_text):
     return blocks
 
 def block_to_block_type(blocks):
-    '''I recommend creating variables that represent each block type and importing them wherever you need to use them, e.g. block_type_paragraph = "paragraph".
+    # '''I recommend creating variables that represent each block type and importing them wherever you need to use them, e.g. block_type_paragraph = "paragraph".
 
-    -Headings start with 1-6 # characters, followed by a space and then the heading  text.
-    -Code blocks must start with 3 backticks and end with 3 backticks.
-    -Every line in a quote block must start with a > character.
-    -Every line in an unordered list block must start with a * or - character, followed by a space.
-    -Every line in an ordered list block must start with a number followed by a . character and a space. The number must start at 1 and increment by 1 for each line.
-    -If none of the above conditions are met, the block is a normal paragraph.'''
+    # -Headings start with 1-6 # characters, followed by a space and then the heading  text.
+    # -Code blocks must start with 3 backticks and end with 3 backticks.
+    # -Every line in a quote block must start with a > character.
+    # -Every line in an unordered list block must start with a * or - character, followed by a space.
+    # -Every line in an ordered list block must start with a number followed by a . character and a space. The number must start at 1 and increment by 1 for each line.
+    # -If none of the above conditions are met, the block is a normal paragraph.'''
 
     block_type_heading = "heading"
     block_type_code = "code"
@@ -47,7 +47,7 @@ def block_to_block_type(blocks):
         hash = 0
         block_type = ""
         for char in line:
-            if char == "#" and i <6:
+            if char == "#":
                 hash += 1
                 i += 1
         if hash != 0:
@@ -61,7 +61,7 @@ def block_to_block_type(blocks):
             return block_type
 
     for line in lines:
-        if line[0] == '>' and line[1] == ' ':
+        if line[0] == '>':
             block_type = block_type_quote
         if line[0] == '-' or line[1] == '*':
             block_type = block_type_unordered
@@ -76,7 +76,7 @@ def block_to_block_type(blocks):
             
 
 
-markdown_to_blocks(markdown_text)
+# markdown_to_blocks(markdown_text)
 
-blocks = '''```some```'''
-print(block_to_block_type(blocks))
+# blocks = '''```some```'''
+# print(block_to_block_type(blocks))
