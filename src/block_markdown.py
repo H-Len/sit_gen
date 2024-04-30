@@ -59,15 +59,12 @@ def block_to_block_type(blocks):
         if line[i: 3] == '```' and line[-3: line_len] == '```':
             block_type = block_type_code
             return block_type
-
-    for line in lines:
-        if line[0] == '>':
+        elif line[0] == '>':
             block_type = block_type_quote
-        if line[0] == '-' or line[1] == '*':
+        elif line[0] == '-' or line[1] == '*':
             block_type = block_type_unordered
-        if line[0] == r"^\d.":
+        elif re.match(r"^\d+\.", line):
             block_type = block_type_ordered
-
         else:
             block_type = block_type_paragraph
 
@@ -78,5 +75,6 @@ def block_to_block_type(blocks):
 
 # markdown_to_blocks(markdown_text)
 
-# blocks = '''```some```'''
-# print(block_to_block_type(blocks))
+blocks = '''>some
+>another'''
+print(block_to_block_type(blocks))

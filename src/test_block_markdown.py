@@ -42,8 +42,8 @@ This is the same paragraph on a new line
         self.assertEqual(block_to_block_type(heading_test), block_type_heading)
         self.assertEqual(block_to_block_type(code_test), block_type_code)
         self.assertEqual(block_to_block_type(quote_test), block_type_quote)
-        # self.assertEqual(block_to_block_type(unordered_test), block_type_unordered)
-        # self.assertEqual(block_to_block_type(ordered_test), block_type_ordered)
+        self.assertEqual(block_to_block_type(unordered_test), block_type_unordered)
+        self.assertEqual(block_to_block_type(ordered_test), block_type_ordered)
         self.assertEqual(block_to_block_type(paragraph_test), block_type_paragraph)
 
 if __name__ == "__main__":
