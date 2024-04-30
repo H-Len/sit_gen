@@ -17,6 +17,12 @@ This is the same paragraph on a new line
         blocks = markdown_to_blocks(markdown_text)
 
         self.assertListEqual(blocks, expected)
+    
+    def test_block_type(self):
+        expected = 'code'
+        code_test = '```something```'
+        
+        self.assertEqual
 
 if __name__ == "__main__":
     unittest.main()
