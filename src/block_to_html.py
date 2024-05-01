@@ -48,15 +48,15 @@ def blocktype_to_html(blocks):
 
         elif block_to_block_type(block) == block_type_unordered:
             # Unordered list blocks should be surrounded by a <ul> tag, and each list item should be surrounded by a <li> tag.
-            ul_string = '''* sleep better
-            * wake refreshed'''
-            new_ul = ['<ul> ']
+            ul_string = '''* sleep better 
+* wake refreshed'''
+            new_ul = ['<ul>']
             split_ul = ul_string.split('*')
             for line in split_ul:
-                new_ul.append(f'<li>line</li>')
+                new_ul.append(f'\n<li>{line}</li>')
             ''.join(new_ul)
-            new_ul.append('</ul>')
-            return f"{new_ul}"
+            new_ul.append('\n</ul>')
+            return f"{''.join(new_ul)}"
 
 
         elif block_to_block_type(block) == block_type_code:
