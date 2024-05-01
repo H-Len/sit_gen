@@ -38,7 +38,7 @@ def blocktype_to_html(blocks):
             ol_string = '''1. good morning
             2. good afternoon
             3. good night'''
-            html_ol = f"<ol>{ol_string}<ol>"
+            return f"<ol>{ol_string}</ol>"
         
         elif block_to_block_type(block) == block_type_quote:
             #tentative skeleton:
