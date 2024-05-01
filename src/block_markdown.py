@@ -61,7 +61,7 @@ def block_to_block_type(blocks):
             return block_type
         elif line[0] == '>':
             block_type = block_type_quote
-        elif line[0] == '-' or line[1] == '*':
+        elif line[0] == '-' or line[0] == '*':
             block_type = block_type_unordered
         elif re.match(r"^\d+\.", line):
             block_type = block_type_ordered
