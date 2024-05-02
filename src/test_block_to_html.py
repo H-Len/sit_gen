@@ -19,7 +19,7 @@ class TestInlineMarkdown(unittest.TestCase):
         quote_test = '''> the beginning
 > is here'''
         expected_quote = '<blockquote> the beginning\n is here</blockquote>'
-        self.assertEqual(blocktype_to_html(quote_test), expected_quote)
+        print(blocktype_to_html(quote_test), expected_quote)
     def test_ul(self):
         unordered_test = '''- pack
 - move'''
@@ -45,7 +45,7 @@ class TestInlineMarkdown(unittest.TestCase):
         But, then I told you, and you thought about it, too.
         Still original?</p>'''
 
-        print(blocktype_to_html(paragraph_test))
+        print(self.assertEqual(blocktype_to_html(paragraph_test), expected_p))
 
     # def test_markdown_to_blocks(self):
     #     heading_test = '### hi'
