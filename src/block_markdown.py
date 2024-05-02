@@ -75,6 +75,6 @@ def block_to_block_type(blocks):
 
 # markdown_to_blocks(markdown_text)
 
-blocks = '''>some
->another'''
-print(block_to_block_type(blocks))
+# blocks = '''>some
+# >another'''
+# print(block_to_block_type(blocks))
