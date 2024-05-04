@@ -40,7 +40,6 @@ def block_to_block_type(blocks):
     block_type = ""
 
 
-    lines = []
     lines = blocks.split('\n')
     for line in lines:
         i = 0

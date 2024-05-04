@@ -27,8 +27,13 @@ def blocktype_to_html(blocks):
     
     elif block_to_block_type(blocks) == block_type_quote:
         # Quote blocks should be surrounded by a <blockquote> tag.
-        # quote_string = '> hello'
-        return f"<blockquote>quote_string[2:]</blockquote>"
+        block_lines = blocks.split('\n')
+        clean_lines = []
+        for line in block_lines:
+            new_line = line.lstrip('> ')
+            clean_lines.append(new_line)
+        new_block = '\n'.join(clean_lines)
+        return f"<blockquote>{new_block}</blockquote>"
 
     elif block_to_block_type(blocks) == block_type_unordered:
         # Unordered list blocks should be surrounded by a <ul> tag, and each list item should be surrounded by a <li> tag.
@@ -37,25 +42,33 @@ def blocktype_to_html(blocks):
         new_ul = ['<ul>']
         split_ul = blocks.split('- ')
         for line in split_ul:
-            new_ul.append(f'/n<li>{line}</li>')
+            clean_line = line.rstrip('\n')
+            if clean_line != '':               
+                new_ul.append(f'<li>{clean_line}</li>')
         ''.join(new_ul)
-        new_ul.append('\n</ul>')
-        return f"{' '.join(new_ul)}"
-        # return new_ul
+        new_ul.append(f'</ul>')
+        return f"{''.join(new_ul)}"
     
     elif current_block_type == block_type_ordered:
         # Ordered list blocks should be surrounded by a <ol> tag, and each list item should be surrounded by a <li> tag.
-        ol_string = '''1. good morning
-2. good afternoon
-3. good night'''
+#         ol_string = '''1. good morning
+# 2. good afternoon
+# 3. good night'''
         new_ol = ['<ol>']
-        split_ol = ol_string.split("/n")
-        print(re.match(r"^\d\.", ol_string))
-        # i = 1
+        split_ol = blocks.split("\n")
+
+        ol_instances = re.findall(r"^\d+\. ", blocks, re.MULTILINE)
+        ol_lines = []
+        for i in ol_instances:
+            instance = i.strip(re.match(r"^\d+\. ", ol_instances))
+            ol_lines.append(instance)
+        print(ol_lines)
         for line in split_ol:
-            new_ul.append(f'\n<li>{line}</li>')
-        ''.join(new_ul)
-        new_ol.append('\n</ol>')
+            clean_line = line.rstrip('\n')
+            if clean_line != '':
+                new_ol.append(f'<li>{clean_line}</li>')
+        ''.join(new_ol)
+        new_ol.append('</ol>')
         return f"{''.join(new_ol)}"
 
     elif block_to_block_type(blocks) == block_type_paragraph:

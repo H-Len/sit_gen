@@ -19,35 +19,29 @@ class TestInlineMarkdown(unittest.TestCase):
     def test_quote(self):
         quote_test = '''> the beginning
 > is here'''
-        expected_quote = '<blockquote>the beginning\n is here</blockquote>'
-        return self.assertEqual(blocktype_to_html({quote_test}), expected_quote)
+        expected_quote = '<blockquote>the beginning\nis here</blockquote>'
+        return self.assertEqual(blocktype_to_html(quote_test), expected_quote)
     def test_ul(self):
         unordered_test = '''- pack
 - move'''
-        expected_ul = '''<ul>
-    <li>pack</li>
-    <li>move</li>
-</ul>'''
+        expected_ul = '''<ul><li>pack</li><li>move</li></ul>'''
         return self.assertEqual(blocktype_to_html(unordered_test), expected_ul)
     def test_ol(self):
-        ordered_test = '''1. wake up
+        ordered_test = '''166. wake up
+get dressed
 2. smile'''
-        expected_ol = '''<ol>
-    <li>wake up</li>
-    <li>smile</li>
-</ol>'''
+        expected_ol = '''<ol><li>wake up</li><li>smile</li></ol>'''
         return self.assertEqual(blocktype_to_html(ordered_test), expected_ol)
    
     def test_paragraph(self):
         paragraph_test = '''I originally thought something for the first time and it
-        was just me, myself, who thought it.
-        But, then I told you, and you thought about it, too.
-        Still original?'''
-
-        expected_p = '''<p>I originally thought something for the first time and it was just me, myself, who thought it.
-        But, then I told you, and you thought about it, too.
-        Still original?</p>'''
-
+was just me, myself, who thought it.
+But, then I told you, and you thought about it, too.
+Still original?'''
+        expected_p = '''<p>I originally thought something for the first time and it
+was just me, myself, who thought it.
+But, then I told you, and you thought about it, too.
+Still original?</p>'''
         return self.assertEqual(blocktype_to_html(paragraph_test), expected_p)
 
     # def test_markdown_to_blocks(self):
