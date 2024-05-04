@@ -11,16 +11,16 @@ class TestInlineMarkdown(unittest.TestCase):
         heading_test = '### hi'
         expected_heading = '<h3>hi</h3>'
         h_test = blocktype_to_html(heading_test)
-        self.assertEqual(h_test, expected_heading)
+        return self.assertEqual(h_test, expected_heading)
     def test_code(self):
         code_test = '```something```'
         expected_code = '<pre><code>something</code></pre>'
-        self.assertEqual(blocktype_to_html(code_test), expected_code)
-    def test_quote(self, quote_test):
+        return self.assertEqual(blocktype_to_html(code_test), expected_code)
+    def test_quote(self):
         quote_test = '''> the beginning
 > is here'''
         expected_quote = '<blockquote>the beginning\n is here</blockquote>'
-        print(blocktype_to_html(quote_test), expected_quote)
+        return self.assertEqual(blocktype_to_html({quote_test}), expected_quote)
     def test_ul(self):
         unordered_test = '''- pack
 - move'''
@@ -37,8 +37,10 @@ class TestInlineMarkdown(unittest.TestCase):
     <li>smile</li>
 </ol>'''
         return self.assertEqual(blocktype_to_html(ordered_test), expected_ol)
+   
     def test_paragraph(self):
-        paragraph_test = '''I originally thought something for the first time and it was just me, myself, who thought it.
+        paragraph_test = '''I originally thought something for the first time and it
+        was just me, myself, who thought it.
         But, then I told you, and you thought about it, too.
         Still original?'''
 
@@ -46,7 +48,7 @@ class TestInlineMarkdown(unittest.TestCase):
         But, then I told you, and you thought about it, too.
         Still original?</p>'''
 
-        print(self.assertEqual(blocktype_to_html(paragraph_test), expected_p))
+        return self.assertEqual(blocktype_to_html(paragraph_test), expected_p)
 
     # def test_markdown_to_blocks(self):
     #     heading_test = '### hi'
@@ -67,3 +69,6 @@ class TestInlineMarkdown(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+#     unordered_test = '''- pack
+# - move'''
+# print(blocktype_to_html(unordered_test))

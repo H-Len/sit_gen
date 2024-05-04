@@ -50,7 +50,7 @@ def block_to_block_type(blocks):
             if char == "#":
                 hash += 1
                 i += 1
-        if hash != 0:
+        if hash != 0 and line[hash] == ' ':
             # i += 1
             block_type = block_type_heading
             return block_type

@@ -11,33 +11,14 @@ def blocktype_to_html(blocks):
     block_type_unordered = "unordered list"
     block_type_ordered = "ordered list"
     block_type_paragraph = "paragraph"
+    current_block_type = block_to_block_type(blocks)
     # for block in blocks:
-    if block_to_block_type(blocks) == block_type_heading:
-        # Headings should be surrounded by a <h1> to <h6> tag, depending on the number of # characters.
-        # delimiter = '#'
-        if block_to_block_type == block_type_heading:
-            count = 0
-            for char in blocks[0:6]:
-                if char == '#':
-                    count += 1
-            if count == 1 and blocks[1] == ' ':
-                split_block = blocks.split('#')
-                return f"<h1>{split_block[0: -1]}</h1>"
-            elif count == 2 and blocks[2] == ' ':
-                split_block = blocks.split('##')
-                return f"<h2>{split_block[1: -2]}</h2>"
-            elif count == 3 and blocks[3] == ' ':
-                split_block = blocks.split('###')
-                return f"<h3>{split_block[2: -3]}</h3>"
-            elif count == 4 and blocks[4] == ' ':
-                split_block = blocks.split('####')
-                return f"<h4>{split_block[3: -4]}</h4>"
-            elif count == 5 and blocks[5] == ' ':
-                split_block = blocks.split('#####')
-                return f"<h5>{split_block[4: -5]}</h5>"
-            elif count == 6 and blocks[6] == ' ':
-                split_block = blocks.split('######')
-                return f"<h6>{split_block[5: -6]}</h6>"
+    if current_block_type == block_type_heading:
+        count = 0
+        for char in blocks[0:6]:
+            if char == '#':
+                count += 1
+        return f"<h{count}>{blocks[count+1:]}</h{count}>"
         
     elif block_to_block_type(blocks) == block_type_code:
         # Code blocks should be surrounded by a <code> tag nested inside a <pre> tag.
@@ -46,29 +27,30 @@ def blocktype_to_html(blocks):
     
     elif block_to_block_type(blocks) == block_type_quote:
         # Quote blocks should be surrounded by a <blockquote> tag.
-        quote_string = '> hello'
-        return f"<blockquote> {quote_string[2:]}</blockquote>"
+        # quote_string = '> hello'
+        return f"<blockquote>quote_string[2:]</blockquote>"
 
     elif block_to_block_type(blocks) == block_type_unordered:
         # Unordered list blocks should be surrounded by a <ul> tag, and each list item should be surrounded by a <li> tag.
-        ul_string = '''* sleep better 
-* wake refreshed'''
+#         ul_string = '''* sleep better 
+# * wake refreshed'''
         new_ul = ['<ul>']
-        split_ul = ul_string.split('*')
+        split_ul = blocks.split('- ')
         for line in split_ul:
-            new_ul.append(f'\n<li>{line}</li>')
+            new_ul.append(f'/n<li>{line}</li>')
         ''.join(new_ul)
         new_ul.append('\n</ul>')
-        return f"{''.join(new_ul)}"
-
-    elif block_to_block_type(blocks) == block_type_ordered:
+        return f"{' '.join(new_ul)}"
+        # return new_ul
+    
+    elif current_block_type == block_type_ordered:
         # Ordered list blocks should be surrounded by a <ol> tag, and each list item should be surrounded by a <li> tag.
         ol_string = '''1. good morning
-        2. good afternoon
-        3. good night'''
+2. good afternoon
+3. good night'''
         new_ol = ['<ol>']
-        split_ol = ol_string.split(re.match(r"^\d\."))
-        print(re.match(r"^\d\."))
+        split_ol = ol_string.split("/n")
+        print(re.match(r"^\d\.", ol_string))
         # i = 1
         for line in split_ol:
             new_ul.append(f'\n<li>{line}</li>')
