@@ -57,12 +57,14 @@ def blocktype_to_html(blocks):
         new_ol = ['<ol>']
         split_ol = blocks.split("\n")
 
-        ol_instances = re.findall(r"^\d+\. ", blocks, re.MULTILINE)
+        # ol_instances = re.findall(r"^\d+\. ", blocks, re.MULTILINE)
         ol_lines = []
-        for i in ol_instances:
-            instance = i.strip(re.match(r"^\d+\. ", ol_instances))
+        for i in split_ol:
+            instance = extract_ol_start(i)
+            # for j in ol_instances:
+            #     instance = i.strip(re.match(r"^\d+\. ", j))
             ol_lines.append(instance)
-        print(ol_lines)
+            print(ol_lines)
         for line in split_ol:
             clean_line = line.rstrip('\n')
             if clean_line != '':
@@ -80,4 +82,11 @@ def blocktype_to_html(blocks):
 heading_test = '## hi'
 
 def test_heading(self):
-    print(blocktype_to_html(heading_test))
+    return blocktype_to_html(heading_test)
+
+
+def extract_ol_start(blocks):
+    matches = re.findall(r"^\d+\. ", blocks)
+    for m in matches:
+        blocks.lstrip(m)
+    return blocks
