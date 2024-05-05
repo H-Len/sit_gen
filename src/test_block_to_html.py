@@ -41,22 +41,5 @@ But, then I told you, and you thought about it, too.
 Still original?</p>'''
         return self.assertEqual(blocktype_to_html(paragraph_test), expected_p)
 
-    # def test_markdown_to_blocks(self):
-    #     heading_test = '### hi'
-    #     expected_heading = '<h3>hi</h3>'
-    #     code_test = '```something```'
-    #     expected_code = '<pre><code>something</code></pre>'
-    #     quote_test = '''> the beginning
-    #     > is here'''
-    #     expected_quote = '<blockquote> the beginning\n is here</blockquote>'
-    #     unordered_test = '''- pack
-    #     - move'''
-    #     ordered_test = '''1. wake up
-    #     2. smile'''
-    #     paragraph_test = '''I originally thought something for the first time and it was just me, myself, who thought it.
-    #     But, then I told you, and you thought about it, too.
-    #     Still original?
-    #     '''
-
 if __name__ == "__main__":
     unittest.main()
