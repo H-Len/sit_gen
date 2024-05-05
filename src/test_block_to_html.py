@@ -2,9 +2,6 @@ import unittest
 import re 
 
 from block_to_html import blocktype_to_html
-# block = '* smile'
-
-# print(blocktype_to_html(block))
 
 class TestInlineMarkdown(unittest.TestCase):
     def test_header(self):
@@ -28,9 +25,9 @@ class TestInlineMarkdown(unittest.TestCase):
         return self.assertEqual(blocktype_to_html(unordered_test), expected_ul)
     def test_ol(self):
         ordered_test = '''166. wake up
-get dressed
-2. smile'''
-        expected_ol = '''<ol><li>wake up</li><li>smile</li></ol>'''
+2. get dressed
+3. smile'''
+        expected_ol = '''<ol><li>wake up</li><li>get dressed</li><li>smile</li></ol>'''
         return self.assertEqual(blocktype_to_html(ordered_test), expected_ol)
    
     def test_paragraph(self):
@@ -63,6 +60,3 @@ Still original?</p>'''
 
 if __name__ == "__main__":
     unittest.main()
-#     unordered_test = '''- pack
-# - move'''
-# print(blocktype_to_html(unordered_test))

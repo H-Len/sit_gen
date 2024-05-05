@@ -12,7 +12,6 @@ def blocktype_to_html(blocks):
     block_type_ordered = "ordered list"
     block_type_paragraph = "paragraph"
     current_block_type = block_to_block_type(blocks)
-    # for block in blocks:
     if current_block_type == block_type_heading:
         count = 0
         for char in blocks[0:6]:
@@ -36,9 +35,7 @@ def blocktype_to_html(blocks):
         return f"<blockquote>{new_block}</blockquote>"
 
     elif block_to_block_type(blocks) == block_type_unordered:
-        # Unordered list blocks should be surrounded by a <ul> tag, and each list item should be surrounded by a <li> tag.
-#         ul_string = '''* sleep better 
-# * wake refreshed'''
+        # Unordered list blocks should be surrounded by a <ul> tag, and each list 
         new_ul = ['<ul>']
         split_ul = blocks.split('- ')
         for line in split_ul:
@@ -51,24 +48,16 @@ def blocktype_to_html(blocks):
     
     elif current_block_type == block_type_ordered:
         # Ordered list blocks should be surrounded by a <ol> tag, and each list item should be surrounded by a <li> tag.
-#         ol_string = '''1. good morning
-# 2. good afternoon
-# 3. good night'''
         new_ol = ['<ol>']
-        split_ol = blocks.split("\n")
-
-        # ol_instances = re.findall(r"^\d+\. ", blocks, re.MULTILINE)
-        ol_lines = []
-        for i in split_ol:
-            instance = extract_ol_start(i)
-            # for j in ol_instances:
-            #     instance = i.strip(re.match(r"^\d+\. ", j))
-            ol_lines.append(instance)
-            print(ol_lines)
-        for line in split_ol:
-            clean_line = line.rstrip('\n')
-            if clean_line != '':
-                new_ol.append(f'<li>{clean_line}</li>')
+        ol_nums = re.findall(r"^\d+\. ", blocks, re.MULTILINE)
+        rest = blocks
+        for num in ol_nums:
+            sections = rest.split(num, 1)
+            if sections[0] != '':
+                next = sections[0].rstrip('\n')
+                new_ol.append(f'<li>{next}</li>')
+            rest = sections[1]
+        new_ol.append(f'<li>{rest}</li>')
         ''.join(new_ol)
         new_ol.append('</ol>')
         return f"{''.join(new_ol)}"
@@ -87,6 +76,16 @@ def test_heading(self):
 
 def extract_ol_start(blocks):
     matches = re.findall(r"^\d+\. ", blocks)
-    for m in matches:
-        blocks.lstrip(m)
-    return blocks
+    new_block = []
+    print(f'block: {blocks}')
+    # for line in blocks:
+    #     print(f'line: {line}')
+    #     for m in matches:
+    #         print(f'line: {line}')
+    #         print(f'm: {m}')
+    #         if m in line:
+    #             starting = len(m)
+    #             print(f'length: {starting}')
+    #             new_block.append(line[starting:])
+    # print(f'nb: {new_block}')
+    return matches
