@@ -2,16 +2,22 @@ import os, shutil
 from textnode import TextNode
 
 
-new_node = TextNode('some new string', 'bold', 'https://here.go')
-other_node = TextNode('stringing chars here', 'bold', 'www.here.now')
 
+def copy_dir_rec(source_dir, target_dir):
+    if os.path.exists(target_dir):
+        shutil.rmtree(target_dir)
+    os.mkdir(target_dir)
+    
+    list = os.listdir(source_dir)
+    for item in list:
+        cur_path = f'{source_dir}/{item}'
+        next_path = f'{target_dir}/{item}'
+        if os.path.isdir(cur_path):
+            copy_dir_rec(cur_path, next_path)
+        else:
+            shutil.copy(cur_path, next_path)
+    
 
-def copy_static():
-    if os.path.exists('./src/public'):
-        shutil.rmtree('./src/public')
-        os.mkdir('./src/public')
-    else:
-        os.mkdir('./src/public')
 
 
 
@@ -19,11 +25,5 @@ def copy_static():
     
 
 def main():
-    # print(new_node.__eq__(other_node))
-    # new_node.__repr__()
-    # other_node.__repr__()
-
-    # print(new_node.__repr__())
-    # print(other_node.__repr__())
-    copy_static()
+    copy_dir_rec('./static', './public')
 main()
