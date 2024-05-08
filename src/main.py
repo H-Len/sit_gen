@@ -1,5 +1,5 @@
 import os, shutil
-from textnode import TextNode
+from block_markdown import block_to_block_type
 
 
 
@@ -18,6 +18,18 @@ def copy_dir_rec(source_dir, target_dir):
             shutil.copy(cur_path, next_path)
     
 
+def extract_title(markdown):
+    # possible_title = markdown[0: 3]
+    # if possible_title == '<h1>':
+    # print(f'markdown: {markdown}')
+    title = ''
+    split_md = markdown.split('\n')
+    if block_to_block_type(markdown) == 'heading':
+        for line in split_md:
+            if line[0:2] == '# ':
+                print(title = line[3:])
+    return title
+
 
 
 
@@ -26,4 +38,5 @@ def copy_dir_rec(source_dir, target_dir):
 
 def main():
     copy_dir_rec('./static', './public')
+    print(extract_title('content/index.md'))
 main()
